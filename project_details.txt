@@ -1,0 +1,37 @@
+Role: Act as a Senior AI Research Engineer specializing in Computer Vision and Medical Foundation Models.
+
+Objective: I need to build a "Medical Visual Question Answering (Med-VQA)" prototype in Google Colab to demonstrate to a potential PhD supervisor. The goal is to show I can deploy Multimodal Large Language Models (MLLMs) for medical diagnostics and benchmark their inference speed.
+
+The Tech Stack:
+
+Environment: Google Colab (Free GPU). if its impossible to load big models into colabs free GPU then choose kaggle free 2xGPU. But I think google colab is easy to handle.
+
+Model: llava-hf/llava-1.5-7b-hf (or a specific Medical-LLaVA variant if available via Hugging Face). Use 4-bit Quantization (bitsandbytes) to demonstrate memory efficiency.
+
+Dataset: A small subset of the ROCO (Radiology Objects in COntext) dataset (just 5-10 validation images of X-rays/CT scans).
+
+Task 1: The Setup Script Please write a complete Python script to:
+
+Install necessary libraries (transformers, bitsandbytes, accelerate, datasets).
+
+Load the LLaVA model efficiently using nf4 quantization.
+
+Download 5 sample X-ray images from the ROCO dataset (or a similar open medical source).
+
+Task 2: The Inference Pipeline Write a function diagnose_xray(image_path, question) that:
+
+Takes an X-ray image and a clinical question (e.g., "What anomaly is present in this chest X-ray?").
+
+Runs the LLaVA model to generate a response.
+
+Crucial: Measures the "Time to First Token" (latency) and "Total Inference Time" to show I care about real-time performance.
+
+Task 3: The Visualization Write code to display the Image side-by-side with the Model's Medical Diagnosis and the Inference Time. Make it look professional (use matplotlib).
+
+Task 4: The "Synthetic Benchmark" (The Flex) Generate a dummy comparison graph using matplotlib. Compare my local LLaVA model's latency (e.g., 0.5s) vs. a hypothetical "Cloud API" latency (e.g., 2.5s) to demonstrate why local deployment is better for hospitals.
+
+Constraints:
+
+The code must be error-free and ready to run.
+
+Add comments explaining why we used specific quantization settings (so I can explain it in my interview)
