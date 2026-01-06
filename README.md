@@ -21,12 +21,14 @@ This project demonstrates:
 
 ### Why This Matters for Healthcare
 
-| Challenge | Our Solution |
+| Challenge | Our Approach |
 |-----------|--------------|
 | High GPU costs | 4-bit quantization reduces VRAM from 14GB → 4GB |
-| Slow cloud APIs | Local deployment achieves 3-5x faster latency |
-| Data privacy (HIPAA) | On-premise inference keeps data secure |
-| Network reliability | Works offline in hospital environments |
+| Model accessibility | Deployment on free Colab/Kaggle GPUs |
+| Data privacy (HIPAA) | On-premise inference capability |
+| Cost | Zero-cost inference (vs $0.01-0.05 per cloud API call) |
+
+**Trade-off:** Quantization achieves memory efficiency but introduces latency (58.6s inference vs ~7s for cloud APIs).
 
 ---
 
@@ -87,12 +89,19 @@ BitsAndBytesConfig(
 
 ## 📊 Performance Benchmarks
 
-| Metric | Local (4-bit) | Cloud API (Avg) | Improvement |
-|--------|---------------|-----------------|-------------|
-| Time to First Token | ~0.5s | ~2.0s | **4x faster** |
-| Total Inference | ~2.5s | ~7.0s | **2.8x faster** |
-| Memory Usage | 4GB | N/A | Fits free GPU |
-| Cost per Query | $0 | $0.01-0.05 | **Free** |
+| Metric | Local (4-bit) | Cloud API (Avg) | Analysis |
+|--------|---------------|-----------------|----------|
+| Time to First Token | ~21.65s | ~2.0s | ❌ **10.8x slower** |
+| Total Inference | ~58.60s | ~7.0s | ❌ **8.4x slower** |
+| Memory Usage | 4.18 GB | N/A | ✅ **Fits free GPU** |
+| Cost per Query | $0 | $0.01-0.05 | ✅ **Free** |
+
+### ⚠️ Key Finding
+4-bit quantization enables deployment on consumer hardware (71% memory reduction) but introduces **significant latency overhead**. While this approach works for offline/batch processing, the ~1 minute inference time is **unsuitable for real-time clinical use**. Production medical AI would require:
+- Smaller models (3B params or less)
+- Better hardware (A100/H100 GPUs)
+- Optimized quantization (AWQ/GPTQ)
+- Or cloud API deployment for time-sensitive applications
 
 ---
 
@@ -163,8 +172,8 @@ This is a **research prototype** for demonstration purposes only.
 
 ## 👨‍💻 Author
 
-**[Your Name]**  
-PhD Candidate Research Prototype  
+**Shezan Ahmed**  
+Research Prototype  
 January 2026
 
 ---
